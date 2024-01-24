@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #image-container {
+            text-align: center;
+        }
+        .loaded-image {
+            max-width: 100%;
+            max-height: 200px;
+            margin: 10px;
+        }
+    </style>
+    <title>Load and Disappear Images</title>
+</head>
+<body>
+
+<div id="image-container"></div>
+
+<script async>
+    // Example JSON with image filenames
+    var jsonData = '{"imageFiles": ["image1.jpg", "image2.jpg", "image3.jpg"] }';
+
+    // Parse JSON data
+    var data = JSON.parse(jsonData);
+
+    // Get the array of image filenames from JSON
+    var imageFiles = data.imageFiles;
+
+    // Reference to the image container
+    var imageContainer = document.getElementById('image-container');
+
+    // Function to load and hide each image after a timeout
+    function loadAndDisappear(imageFilenames, container) {
+        imageFilenames.forEach(function (filename, index) {
+            var imgElement = document.createElement('img');
+            imgElement.className = 'loaded-image';
+            imgElement.src = 'images/' + filename;
+            imgElement.alt = 'Loaded Image';
+            container.appendChild(imgElement);
+
+            // Set a timeout to hide the image after 2000 milliseconds (2 seconds) multiplied by the index
+            setTimeout(function() {
+                container.removeChild(imgElement);
+            }, 2000);
+        });
+    }
+
+    // Load and hide the images after a timeout
+    loadAndDisappear(imageFiles, imageContainer);
+</script>
+
+</body>
+</html>
